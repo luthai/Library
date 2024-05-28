@@ -11,8 +11,32 @@
     <div class="header-container">
         <div class="header">
             <h1>Library</h1>
-            <button class="add-book">Add book</button>
+            <button class="new-book">NEW BOOK</button>
         </div>
+        <dialog class="dialog-new-book">
+            <form>
+                <p>
+                    <label>
+                      Title:
+                      <input class="form-title" type="text" required />
+                      <br><br>
+                      Author:
+                      <input class="form-author" type="text" required />
+                      <br><br>
+                      Pages:
+                      <input class="form-pages" type="text" required />
+                      <br><br>
+                      Read:
+                      <input class="form-read" type="text" required />
+                      <br><br>
+                    </label>
+                </p>
+              <div>
+                <button class="confirm-button" value="default">Confirm</button>
+                <button class="cancel-button" value="cancel" type="reset">Cancel</button>           
+              </div>
+            </form>
+          </dialog>
     </div>
     <div class="main-container">
         <div class="main"></div>
