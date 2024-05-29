@@ -19,10 +19,10 @@ function random5Digits() {
    return Math.random().toString(36).substring(3,9);
 };
 
-const hobbit = new Book("Hobbit", "J.R.R. Tolkien", "265 pages", "not read yet");
-const lotr1 = new Book("The Fellowship of the Ring", "J.R.R Tolkien", "432 pages", "read");
-const lotr2 = new Book("The Two Towers", "J.R.R. Tolkien", "448 pages", "read");
-const lotr3 = new Book("The Return of the King", "J.R.R. Tolkien", "432 pages", "read");
+const hobbit = new Book("Hobbit", "J.R.R. Tolkien", "265 pages", "Not read yet");
+const lotr1 = new Book("The Fellowship of the Ring", "J.R.R Tolkien", "432 pages", "Read");
+const lotr2 = new Book("The Two Towers", "J.R.R. Tolkien", "448 pages", "Read");
+const lotr3 = new Book("The Return of the King", "J.R.R. Tolkien", "432 pages", "Read");
 addBookToLibrary(hobbit);
 addBookToLibrary(lotr1);
 addBookToLibrary(lotr2);
@@ -81,21 +81,28 @@ function createCard(book) {
     card.appendChild(card_pages);
 
     let card_read = document.createElement("p");
+    card_read.className = "card-read";
     card_read.textContent = book.read;
     card.appendChild(card_read);
+
+    let divBtn = document.createElement("div");
+    divBtn.className = "div-buttons";
+    card.appendChild(divBtn);
 
     let card_btn_delete = document.createElement("button");
     card_btn_delete.className = "card-btn-delete";
     card_btn_delete.id = book.id;
     card_btn_delete.textContent = "Delete";
-    card.appendChild(card_btn_delete);
+    divBtn.appendChild(card_btn_delete);
+
+    let card_btn_read = document.createElement("button");
+    card_btn_read.className = "card-btn-read";
+    card_btn_read.id = book.id;
+    card_btn_read.textContent = "Read";
+    divBtn.appendChild(card_btn_read);
 
     main.appendChild(card);
 };
-
-function deleteBook() {
-    console.log("hello world");
-}
 
 const main = document.querySelector(".main");
 for (const book in myLibrary) {
@@ -103,13 +110,39 @@ for (const book in myLibrary) {
 }
 
 main.addEventListener("click", (e) => {
-    if(e.target.tagName === 'BUTTON') {
-        const book_id = e.target.id;
-        const index = myLibrary.findIndex(x => x.id === book_id);
+    if (e.target.tagName === 'BUTTON') {
+        let book_id = e.target.id;
+        let book_card = document.getElementById(`${book_id}`);
+        if(e.target.className === 'card-btn-delete') {
+            const index = myLibrary.findIndex(x => x.id === book_id);
+            
+            myLibrary.splice(index, 1);
+    
+            book_card.parentNode.removeChild(book_card);
+        } else if(e.target.className === 'card-btn-read') {
+            let book_read = book_card.querySelector(".card-read");
+    
+            if (book_read.textContent === "Read") {
+                book_read.textContent = "Not yet read";
+            } else {
+                book_read.textContent = "Read";
+            }
+        }
+    
         
-        myLibrary.splice(index, 1);
-
-        const book_card = document.querySelector(`#${book_id}`);
-        book_card.parentNode.removeChild(book_card);
     }
 });
+/*
+main.addEventListener("click", (e) => {
+    if(e.target.className === 'card-btn-read') {
+        let book_id = e.target.id;
+        let book_card = document.querySelector(`#${book_id}`);
+        let book_read = book_card.querySelector(".card-read");
+
+        if (book_read.textContent === "Read") {
+            book_read.textContent = "Not yet read";
+        } else {
+            book_read.textContent = "Read";
+        }
+    }
+});*/
